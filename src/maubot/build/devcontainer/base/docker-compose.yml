@@ -9,7 +9,7 @@ services:
     volumes:
       - maubot-data:${MAUBOT_DB_FOLDER:-/data}
     networks:
-      - matrix-bridges-workspace-network
+      - maubot-workspace-network
 volumes:
   maubot-data:
     name: maubot-data
@@ -86,5 +86,5 @@ configs:
           level: DEBUG
           handlers: [file, console]
 networks:
-  matrix-bridges-workspace-network:
+  maubot-workspace-network:
     external: true

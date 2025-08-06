@@ -1,8 +1,8 @@
 services:
   maubot:
     networks:
-      - matrix-bridges-workspace-network
+      - maubot-workspace-network
 
 networks:
-  matrix-bridges-workspace-network:
+  maubot-workspace-network:
     external: true

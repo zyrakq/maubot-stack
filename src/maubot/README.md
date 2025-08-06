@@ -22,16 +22,23 @@ src/maubot/
 │   │       ├── docker-compose.yml          # Step CA SSL
 │   │       └── .env.example                # Step CA variables
 │   └── extensions/                         # Extension components
+│       ├── step-ca-trust/                  # Step CA trust extension
+│       │   ├── docker-compose.yml          # Step CA trust configuration
+│       │   └── .env.example                # Step CA trust variables
 │       └── .gitkeep                        # Placeholder for future extensions
 ├── build/                        # Generated configurations (auto-generated)
 │   ├── devcontainer/
-│   │   └── base/                 # Dev container + base configuration
+│   │   ├── base/                 # Dev container + base configuration
+│   │   └── step-ca-trust/        # Dev container + step-ca-trust extension
 │   ├── forwarding/
-│   │   └── base/                 # Development + base configuration
+│   │   ├── base/                 # Development + base configuration
+│   │   └── step-ca-trust/        # Development + step-ca-trust extension
 │   ├── letsencrypt/
-│   │   └── base/                 # Let's Encrypt + base configuration
+│   │   ├── base/                 # Let's Encrypt + base configuration
+│   │   └── step-ca-trust/        # Let's Encrypt + step-ca-trust extension
 │   └── step-ca/
-│       └── base/                 # Step CA + base configuration
+│       ├── base/                 # Step CA + base configuration
+│       └── step-ca-trust/        # Step CA + step-ca-trust extension
 ├── build.sh                      # Build script
 └── README.md                     # This file
 ```
@@ -56,14 +63,26 @@ Navigate to the desired configuration directory:
 # For development with port forwarding
 cd build/forwarding/base/
 
+# For development with Step CA trust
+cd build/forwarding/step-ca-trust/
+
 # For production with Let's Encrypt SSL
 cd build/letsencrypt/base/
+
+# For production with Let's Encrypt SSL and Step CA trust
+cd build/letsencrypt/step-ca-trust/
 
 # For production with Step CA SSL
 cd build/step-ca/base/
 
+# For production with Step CA SSL and trust
+cd build/step-ca/step-ca-trust/
+
 # For dev container integration
 cd build/devcontainer/base/
+
+# For dev container with Step CA trust
+cd build/devcontainer/step-ca-trust/
 ```
 
 ### 3. Configure Environment
@@ -96,16 +115,20 @@ Access: `http://localhost:29316` (for forwarding mode)
 
 ### Extensions
 
-Currently no extensions are implemented, but the architecture is ready for their addition.
+- **step-ca-trust**: Automatic installation of Step CA certificates as trusted for the container
 
 ### Generated Combinations
 
 Each environment can be combined with any extension:
 
 - `devcontainer/base` - Dev container integration
+- `devcontainer/step-ca-trust` - Dev container with Step CA trust
 - `forwarding/base` - Development with port forwarding
+- `forwarding/step-ca-trust` - Development with Step CA trust
 - `letsencrypt/base` - Production with Let's Encrypt SSL
+- `letsencrypt/step-ca-trust` - Production with Let's Encrypt SSL and Step CA trust
 - `step-ca/base` - Production with Step CA SSL
+- `step-ca/step-ca-trust` - Production with Step CA SSL and trust
 
 ## 🔧 Environment Variables
 
@@ -142,6 +165,11 @@ Each environment can be combined with any extension:
 - `VIRTUAL_HOST`: Domain for nginx-proxy
 - `LETSENCRYPT_HOST`: Domain for SSL certificate
 - `LETSENCRYPT_EMAIL`: Email for certificate registration
+
+### Step CA Trust Extension
+
+- `STEP_CA_TRUST`: Enable automatic Step CA certificate trust (default: true)
+- `STEP_CA_TRUST_RESTART`: Restart container after trust installation (default: true)
 
 ## 🤖 Using Maubot
 

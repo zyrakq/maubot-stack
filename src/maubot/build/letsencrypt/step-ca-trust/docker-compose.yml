@@ -13,8 +13,10 @@ services:
       VIRTUAL_HOST: ${VIRTUAL_HOST}
       LETSENCRYPT_HOST: ${LETSENCRYPT_HOST}
       LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
+      STEP_CA_TRUST: ${STEP_CA_TRUST:-true}
+      STEP_CA_TRUST_RESTART: ${STEP_CA_TRUST_RESTART:-true}
     networks:
-      - step-ca-network
+      - letsencrypt-network
 volumes:
   maubot-data:
     name: maubot-data
@@ -91,5 +93,5 @@ configs:
           level: DEBUG
           handlers: [file, console]
 networks:
-  step-ca-network:
+  letsencrypt-network:
     external: true
