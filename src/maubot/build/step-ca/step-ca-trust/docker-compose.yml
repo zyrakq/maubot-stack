@@ -3,6 +3,11 @@ services:
     container_name: maubot
     image: dock.mau.dev/maubot/maubot:latest
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: 10m
+        max-file: 3
     configs:
       - source: app-config
         target: /data/config.yaml
